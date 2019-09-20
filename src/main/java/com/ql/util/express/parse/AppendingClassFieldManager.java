@@ -21,7 +21,7 @@ public class AppendingClassFieldManager {
 
         public Class<?> returnType;
 
-        public AppendingField(String name, Class<?> bindingClass,Class<?> returnType, Operator op) {
+        public AppendingField(String name, Class<?> bindingClass, Class<?> returnType, Operator op) {
             this.name = name;
             this.bindingClass = bindingClass;
             this.op = op;
@@ -31,16 +31,14 @@ public class AppendingClassFieldManager {
 
     private List<AppendingField> Fields = new ArrayList<AppendingField>();
 
-    public void addAppendingField(String name,Class<?> bindingClass,Class<?> returnType, Operator op)
-    {
-        Fields.add(new AppendingField(name,bindingClass,returnType,op));
+    public void addAppendingField(String name, Class<?> bindingClass, Class<?> returnType, Operator op) {
+        Fields.add(new AppendingField(name, bindingClass, returnType, op));
     }
 
-    public AppendingField getAppendingClassField(Object object, String FieldName)
-    {
-        for(AppendingField Field : Fields){
+    public AppendingField getAppendingClassField(Object object, String FieldName) {
+        for (AppendingField Field : Fields) {
             //object是定义类型的子类
-            if(FieldName.equals(Field.name) && (object.getClass()==Field.bindingClass || Field.bindingClass.isAssignableFrom(object.getClass()))){
+            if (FieldName.equals(Field.name) && (object.getClass() == Field.bindingClass || Field.bindingClass.isAssignableFrom(object.getClass()))) {
                 return Field;
             }
         }
@@ -50,7 +48,7 @@ public class AppendingClassFieldManager {
 
     public Object invoke(AppendingField Field, InstructionSetContext context, Object aFieldObject, List<String> errorList) throws Exception {
         Operator op = Field.op;
-        Object result =  op.executeInner(new Object[]{aFieldObject});
+        Object result = op.executeInner(new Object[]{aFieldObject});
         return result;
     }
 
